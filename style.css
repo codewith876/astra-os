@@ -1,0 +1,700 @@
+/* ==========================================================================
+   1. GLOBAL RESETS & TYPOGRAPHY
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    background-color: #08090d;
+}
+
+/* ==========================================================================
+   2. FIXED BACKGROUND WALLPAPER
+   ========================================================================== */
+img.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.7) contrast(1.1);
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   3. SYSTEM BOOT SCREEN OVERLAY
+   ========================================================================== */
+.boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #090b10;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', monospace, sans-serif;
+    color: #d0d0d0;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.boot-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.boot-container {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    max-width: 850px;
+    width: 90%;
+}
+
+.boot-terminal {
+    flex: 1.4;
+    background: #0f121b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.boot-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.boot-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.boot-controls .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.boot-controls .close {
+    background: #ff5f57;
+}
+
+.boot-controls .minimize {
+    background: #febc2e;
+}
+
+.boot-controls .expand {
+    background: #28c840;
+}
+
+.boot-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #8a92ae;
+}
+
+.boot-logs {
+    padding: 16px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #a0a8c0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.log-line {
+    display: flex;
+    gap: 12px;
+}
+
+.log-timestamp {
+    color: #ff6b8b;
+}
+
+.boot-sidebar {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.progress-ring-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 8;
+}
+
+.ring-fill {
+    fill: none;
+    stroke: url(#ring-grad);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+    transition: stroke-dashoffset 0.15s linear;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.progress-text span {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.progress-text small {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #ff6b8b;
+}
+
+.boot-info-table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.info-row span {
+    color: #6a728e;
+}
+
+.info-row strong {
+    color: #d0d0d0;
+}
+
+/* ==========================================================================
+   4. DESKTOP BRANDING
+   ========================================================================== */
+.main-content {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.main-content h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #ffffff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+}
+
+.main-content h2 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 4px;
+    text-transform: lowercase;
+}
+
+/* ==========================================================================
+   5. TOP STATUS BAR
+   ========================================================================== */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 38px;
+    background: rgba(15, 18, 27, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 1000;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.top-bar-left .app-name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ff6b8b;
+}
+
+.search-bar {
+    flex: 0 1 260px;
+}
+
+.search-bar input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 4px 12px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.search-bar input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-bar input:focus {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: #ff6b8b;
+    box-shadow: 0 0 10px rgba(255, 107, 139, 0.3);
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.battery {
+    display: flex;
+    align-items: center;
+}
+
+.battery-body {
+    width: 22px;
+    height: 11px;
+    border: 1.5px solid #d0d0d0;
+    border-radius: 3px;
+    padding: 1px;
+}
+
+.battery-fill {
+    width: 78%;
+    height: 100%;
+    background: #28c840;
+    border-radius: 1px;
+}
+
+.battery-tip {
+    width: 2px;
+    height: 5px;
+    background: #d0d0d0;
+    border-radius: 0 1px 1px 0;
+}
+
+.top-bar-right .icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: #d0d0d0;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vertical-align: middle;
+}
+
+#top-datetime {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* ==========================================================================
+   6. DESKTOP WIDGETS
+   ========================================================================== */
+.widgets {
+    position: absolute;
+    top: 60px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+}
+
+.clock-widget,
+.calendar-widget {
+    background: rgba(15, 18, 27, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.clock-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+}
+
+.clock-face {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    margin-bottom: 12px;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 4px;
+}
+
+.hour-hand {
+    width: 4px;
+    height: 32px;
+    background: #ffffff;
+}
+
+.minute-hand {
+    width: 3px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.second-hand {
+    width: 1.5px;
+    height: 52px;
+    background: #ff6b8b;
+}
+
+.clock-digital {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #a0a8c0;
+}
+
+.calendar-widget {
+    width: 220px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cal-arrow {
+    cursor: pointer;
+    padding: 0 6px;
+    font-size: 16px;
+    color: #ff6b8b;
+    transition: opacity 0.2s;
+}
+
+.cal-arrow:hover {
+    opacity: 0.7;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.calendar-grid div {
+    padding: 4px 0;
+    border-radius: 6px;
+}
+
+.calendar-grid div.active-day {
+    background: #ff6b8b;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   7. DESKTOP DOCK
+   ========================================================================== */
+.dock {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 18, 27, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 14px;
+    border-radius: 24px;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dock-icon {
+    font-size: 26px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dock-icon:hover {
+    transform: translateY(-8px) scale(1.15);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   8. APP WINDOWS & CONTROLS
+   ========================================================================== */
+.window {
+    position: absolute;
+    top: 120px;
+    left: 120px;
+    width: 400px;
+    height: 300px;
+    background: rgba(15, 18, 27, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.window.active {
+    display: flex;
+}
+
+.window-titlebar {
+    height: 36px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    cursor: move;
+}
+
+.window-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #a0a8c0;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.window-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.window-btn:hover {
+    opacity: 0.8;
+}
+
+.window-btn.minimize {
+    background: #febc2e;
+}
+
+.window-btn.close {
+    background: #ff5f57;
+}
+
+.window-content {
+    flex: 1;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.window-content textarea {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    resize: none;
+}
+
+.calc-display {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    flex: 1;
+}
+
+.calc-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.calc-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.calc-btn.op {
+    background: rgba(95, 111, 255, 0.2);
+    color: #8b99ff;
+}
+
+.calc-btn.op:hover {
+    background: rgba(95, 111, 255, 0.35);
+}
+
+.calc-btn.eq {
+    background: #ff6b8b;
+    color: #ffffff;
+}
+
+.calc-btn.eq:hover {
+    background: #ff5277;
+}
+
+/* ==========================================================================
+   9. CUSTOM DESKTOP CONTEXT MENU
+   ========================================================================== */
+.context-menu {
+    position: fixed;
+    width: 160px;
+    background: rgba(15, 18, 27, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    z-index: 10000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.context-menu.visible {
+    display: flex;
+}
+
+.context-menu-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #d0d0d0;
+    transition: all 0.15s ease;
+}
+
+.context-menu-item:hover {
+    background: rgba(255, 107, 139, 0.2);
+    color: #ffffff;
+}
+
+.context-menu-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 4px 0;
+}

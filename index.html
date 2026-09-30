@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astra OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Fullscreen Fixed Wallpaper -->
+    <img class="bg" src="./astra-os-bg.jpg" alt="Astra OS Wallpaper" />
+
+    <!-- Boot Screen Overlay -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-container">
+            <div class="boot-terminal">
+                <div class="boot-header">
+                    <div class="boot-controls">
+                        <span class="dot close"></span>
+                        <span class="dot minimize"></span>
+                        <span class="dot expand"></span>
+                    </div>
+                    <div class="boot-title">SYSTEM BOOT</div>
+                </div>
+                <div class="boot-logs" id="boot-logs"></div>
+            </div>
+
+            <div class="boot-sidebar">
+                <div class="progress-ring-container">
+                    <svg class="progress-ring" width="160" height="160">
+                        <defs>
+                            <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff6b8b" />
+                                <stop offset="100%" stop-color="#5f6fff" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
+                        <circle class="ring-fill" id="boot-ring" cx="80" cy="80" r="70"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <span id="boot-percentage">0%</span>
+                        <small>SERVICES</small>
+                    </div>
+                </div>
+
+                <div class="boot-info-table">
+                    <div class="info-row"><span>OS</span> <strong>Astra OS 1.0.0</strong></div>
+                    <div class="info-row"><span>KERNEL</span> <strong>6.9.0-astra</strong></div>
+                    <div class="info-row"><span>THEME</span> <strong>deep-space-dark</strong></div>
+                    <div class="info-row"><span>WM</span> <strong>astra-glass</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Branding -->
+    <div class="main-content">
+        <h1>Astra OS</h1>
+        <h2>right-click to begin</h2>
+    </div>
+
+    <!-- Top Status Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span class="app-name">Astra OS</span>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="app-search" placeholder="Search apps..." />
+        </div>
+
+        <div class="top-bar-right">
+            <div class="battery" title="Battery: 78%">
+                <div class="battery-body">
+                    <div class="battery-fill"></div>
+                </div>
+                <div class="battery-tip"></div>
+            </div>
+            <div class="icon" title="Wi-Fi">
+                <svg viewBox="0 0 24 24">
+                    <path d="M2 8.5c5.5-5.3 14.5-5.3 20 0" />
+                    <path d="M5.5 12.3c3.7-3.4 9.3-3.4 13 0" />
+                    <path d="M9 16c1.7-1.5 4.3-1.5 6 0" />
+                    <circle cx="12" cy="19" r="1" fill="#d0d0d0" stroke="none" />
+                </svg>
+            </div>
+            <div class="icon" title="Volume">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 9v6h4l5 4V5L8 9H4z" />
+                    <path d="M16.5 8.5a5 5 0 0 1 0 7" />
+                    <path d="M19 6a8.5 8.5 0 0 1 0 12" />
+                </svg>
+            </div>
+            <span id="top-datetime">Mon, Sep 28 9:31 PM</span>
+        </div>
+    </div>
+
+    <!-- Desktop Widgets -->
+    <div class="widgets">
+        <div class="clock-widget">
+            <div class="clock-face">
+                <div class="hand hour-hand" id="hour-hand"></div>
+                <div class="hand minute-hand" id="minute-hand"></div>
+                <div class="hand second-hand" id="second-hand"></div>
+            </div>
+            <div class="clock-digital" id="clock-digital">09:31:28 PM</div>
+        </div>
+        <div class="calendar-widget">
+            <div class="calendar-header">
+                <span class="cal-arrow" id="prev-month">&#8249;</span>
+                <span class="calendar-month" id="calendar-month">September 2026</span>
+                <span class="cal-arrow" id="next-month">&#8250;</span>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+        </div>
+    </div>
+
+    <!-- Desktop Dock -->
+    <div class="dock">
+        <div class="dock-icon notes" title="Notes" onclick="openWindow('notes-window')">📝</div>
+        <div class="dock-icon calculator" title="Calculator" onclick="openWindow('calc-window')">🧮</div>
+    </div>
+
+    <!-- Notes App Window -->
+    <div class="window" id="notes-window">
+        <div class="window-titlebar" onmousedown="startDrag(event, 'notes-window')">
+            <span class="window-title">Notes</span>
+            <div class="window-controls">
+                <button class="window-btn minimize" onclick="closeWindow('notes-window')"></button>
+                <button class="window-btn close" onclick="closeWindow('notes-window')"></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <textarea placeholder="Type your notes here..."></textarea>
+        </div>
+    </div>
+
+    <!-- Calculator App Window -->
+    <div class="window" id="calc-window" style="width:260px; top:160px; left:520px;">
+        <div class="window-titlebar" onmousedown="startDrag(event, 'calc-window')">
+            <span class="window-title">Calculator</span>
+            <div class="window-controls">
+                <button class="window-btn minimize" onclick="closeWindow('calc-window')"></button>
+                <button class="window-btn close" onclick="closeWindow('calc-window')"></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="calc-display" id="calc-display">0</div>
+            <div class="calc-grid">
+                <button class="calc-btn" onclick="calcInput('7')">7</button>
+                <button class="calc-btn" onclick="calcInput('8')">8</button>
+                <button class="calc-btn" onclick="calcInput('9')">9</button>
+                <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+
+                <button class="calc-btn" onclick="calcInput('4')">4</button>
+                <button class="calc-btn" onclick="calcInput('5')">5</button>
+                <button class="calc-btn" onclick="calcInput('6')">6</button>
+                <button class="calc-btn op" onclick="calcInput('*')">×</button>
+
+                <button class="calc-btn" onclick="calcInput('1')">1</button>
+                <button class="calc-btn" onclick="calcInput('2')">2</button>
+                <button class="calc-btn" onclick="calcInput('3')">3</button>
+                <button class="calc-btn op" onclick="calcInput('-')">−</button>
+
+                <button class="calc-btn" onclick="calcInput('0')">0</button>
+                <button class="calc-btn" onclick="calcInput('.')">.</button>
+                <button class="calc-btn eq" onclick="calcEquals()">=</button>
+                <button class="calc-btn op" onclick="calcInput('+')">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Context Menu -->
+    <div class="context-menu" id="context-menu">
+        <div class="context-menu-item" onclick="openWindow('notes-window'); hideContextMenu();">New Note</div>
+        <div class="context-menu-item" onclick="openWindow('calc-window'); hideContextMenu();">Calculator</div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" onclick="location.reload();">Refresh OS</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
